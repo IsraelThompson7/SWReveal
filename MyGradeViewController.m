@@ -10,7 +10,10 @@
 #import "AppDelegate.h"
 #import "SWRevealViewController.h"
 
-@interface MyGradeViewController ()
+@interface MyGradeViewController () <UIScrollViewDelegate>
+
+@property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, weak) IBOutlet UIPageControl *pageControl;
 
 @end
 
@@ -30,8 +33,10 @@
     [super viewDidLoad];
     
     SWRevealViewController *revealController = self.revealViewController;
-    
     [self.view addGestureRecognizer:revealController.panGestureRecognizer];
+    
+    
+    
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -40,6 +45,13 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    CGFloat width = self.scrollView.bounds.size.width;
+    int currentPage = (self.scrollView.contentOffset.x + width/2.0) / width;
+    self.pageControl.currentPage = currentPage;
 }
 
 @end

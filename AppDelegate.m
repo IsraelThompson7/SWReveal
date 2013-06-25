@@ -20,6 +20,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	self.window = window;
@@ -28,7 +29,7 @@
     OpeningViewController *frontViewController = [[OpeningViewController alloc] init];
     
     
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:frontViewController];
+   // UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:frontViewController];
     
     SWRevealViewController *mainRevealController =
     [[SWRevealViewController alloc] initWithRearViewController:rearViewController frontViewController:frontViewController];
@@ -37,13 +38,14 @@
     mainRevealController.rearViewRevealOverdraw = 120;
     mainRevealController.bounceBackOnOverdraw = NO;
     mainRevealController.stableDragOnOverdraw = YES;
-    [mainRevealController setFrontViewPosition:FrontViewPositionRight];
+    //[mainRevealController setFrontViewPosition:FrontViewPositionRight];
     
     mainRevealController.delegate = self;
     
 	self.window.rootViewController = mainRevealController;
 	[self.window makeKeyAndVisible];
 	return YES;
+    
     
    
     

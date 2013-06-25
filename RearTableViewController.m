@@ -112,10 +112,10 @@
             
             
             MyGradeViewController *MyGradeView = [[MyGradeViewController alloc] init];
-            /*
-             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:secondFrontView];
-             */
-            [revealController setFrontViewController:MyGradeView animated:YES];
+            
+             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:MyGradeView];
+             
+            [revealController setFrontViewController:navigationController animated:YES];
             
         } else {
             [revealController revealToggle:self];
