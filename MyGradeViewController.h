@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyGradeViewController : UIViewController
+#import "ReasonViewController.h"
+
+@interface MyGradeViewController : UIViewController <ReasonViewControllerDelegate>
 
 @end
