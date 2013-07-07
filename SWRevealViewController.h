@@ -132,6 +132,8 @@ typedef enum
 // The class properly handles all the relevant calls to appearance methods on the contained controllers.
 // Moreover you can assign a delegate to let the class inform you on positions and animation activity.
 
+
+
 // Delegate
 @property (assign, nonatomic) id<SWRevealViewControllerDelegate> delegate;
 

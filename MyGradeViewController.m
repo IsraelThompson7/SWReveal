@@ -12,16 +12,21 @@
 #import <QuartzCore/QuartzCore.h>
 #import "FinalGradeViewController.h"
 #import "ReasonViewController.h"
+#import "Grade.h"
 
 @interface MyGradeViewController () <UIScrollViewDelegate, UIScrollViewAccessibilityDelegate>
 
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UIPageControl *pageControl;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *btn;
+@property (nonatomic, strong) NSNumber *finalGrade;
 
 @end
 
 @implementation MyGradeViewController {
+    
+    Grade *grade;
+    NSArray *scoreArray;
     
     NSNumber *firstGrade;
     NSNumber *secondGrade;
@@ -35,6 +40,19 @@
     NSNumber *tenthGrade;
     NSNumber *eleventhGrade;
     NSNumber *twelfthGrade;
+    
+    NSString *reasonOne;
+    NSString *reasonTwo;
+    NSString *reasonThree;
+    NSString *reasonFour;
+    NSString *reasonFive;
+    NSString *reasonSix;
+    NSString *reasonSeven;
+    NSString *reasonEighth;
+    NSString *reasonNine;
+    NSString *reasonTen;
+    NSString *reasonEleven;
+    NSString *reasonTwelve;
     
     UISlider *firstSlider;
     UISlider *secondSlider;
@@ -76,18 +94,7 @@
     UILabel *eleventhReason;
     UILabel *twelfthReason;
     
-    NSString *reasonOne;
-    NSString *reasonTwo;
-    NSString *reasonThree;
-    NSString *reasonFour;
-    NSString *reasonFive;
-    NSString *reasonSix;
-    NSString *reasonSeven;
-    NSString *reasonEighth;
-    NSString *reasonNine;
-    NSString *reasonTen;
-    NSString *reasonEleven;
-    NSString *reasonTwelve;
+
     
     NSArray *reasonsArray;
     NSArray *reasonsArray2;
@@ -138,22 +145,61 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+- (void)performFetch {
     
-    SWRevealViewController *revealController = self.revealViewController;
-    [self.view addGestureRecognizer:revealController.panGestureRecognizer];
     
-    NSDictionary *buttonAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor lightGrayColor], UITextAttributeTextColor, nil];
-    [self.btn setTitleTextAttributes:buttonAttributes forState:UIControlStateNormal];
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Grade" inManagedObjectContext:self.managedObjectContext];
+        [fetchRequest setEntity:entity];
+        
+        NSError *error;
+        NSArray *foundObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+        if (foundObjects == nil) {
+            NSLog(@"FETCH REQUEST ERROR");
+            return;
+        }
+        
+       grade = [foundObjects lastObject];
     
-    self.scrollView.contentSize = CGSizeMake(3600, 300);
-    self.scrollView.alwaysBounceVertical = NO;
-    self.scrollView.delaysContentTouches = NO;
-    self.scrollView.userInteractionEnabled = YES;
+
     
-    UIFont *romanFont = [UIFont fontWithName:@"Times New Roman" size:24.0f];
+}
+
+- (void)loadIvars {
+    
+    
+    firstGrade = grade.firstGrade;
+    secondGrade = grade.secondGrade;
+    thirdGrade = grade.thirdGrade;
+    fourthGrade = grade.fourthGrade;
+    fifthGrade = grade.fifthGrade;
+    sixthGrade = grade.sixthGrade;
+    seventhGrade = grade.seventhGrade;
+    eighthGrade = grade.eighthGrade;
+    ninthGrade = grade.ninthGrade;
+    tenthGrade = grade.tenthGrade;
+    eleventhGrade = grade.eleventhGrade;
+    twelfthGrade = grade.twelfthGrade;
+    
+    reasonOne = grade.firstReason;
+    reasonTwo = grade.secondReason;
+    reasonThree = grade.thirdReason;
+    reasonFour = grade.fourthReason;
+    reasonFive = grade.fifthReason;
+    reasonSix = grade.sixthReason;
+    reasonSeven = grade.seventhReason;
+    reasonEighth = grade.eighthReason;
+    reasonNine = grade.ninthReason;
+    reasonTen = grade.tenthReason;
+    reasonEleven = grade.eleventhReason;
+    reasonTwelve = grade.twelfthReason;
+    
+}
+
+- (void)loadReasonArrays {
+    
     
     reasonsArray = [[NSArray alloc] initWithObjects:@"Many of my friends are unhealthy to be around",
                     @"Some of my friends are genuine, supportive and trustworthy but some are unhealthy to be around",
@@ -180,6 +226,36 @@
     reasonsArray11 = [[NSArray alloc] initWithObjects:@"I am a very happy and positive person.", @"I am typically happy, but have my ups and downs.", @"Life seems somewhat grey and not very exciting.", nil];
     
     reasonsArray12 = [[NSArray alloc] initWithObjects:@"I feel mentally and physically healthy and invigorated.", @"I could use a little emotional/physical boost.", @"I absolutely need to feel better emotionally and physically.", nil];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    NSLog(@"MANAGED OBJECT %@", self.managedObjectContext);
+    
+    
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = delegate.managedObjectContext;
+    
+    [self performFetch];
+    [self loadIvars];
+
+    
+   
+    SWRevealViewController *revealController = self.revealViewController;
+    [self.view addGestureRecognizer:revealController.panGestureRecognizer];
+    
+    NSDictionary *buttonAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor lightGrayColor], UITextAttributeTextColor, nil];
+    [self.btn setTitleTextAttributes:buttonAttributes forState:UIControlStateNormal];
+    
+    self.scrollView.contentSize = CGSizeMake(3600, 300);
+    self.scrollView.alwaysBounceVertical = NO;
+    self.scrollView.delaysContentTouches = NO;
+    self.scrollView.userInteractionEnabled = YES;
+    
+    UIFont *romanFont = [UIFont fontWithName:@"Times New Roman" size:24.0f];
+    [self loadReasonArrays];
     
     tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectedView:)];
     tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectedView:)];
@@ -215,7 +291,11 @@
     firstReason = [[UILabel alloc] initWithFrame:CGRectMake(30, 75, 220, 100)];
     firstReason.userInteractionEnabled = YES;
     [firstReason addGestureRecognizer:tap];
-    firstReason.text = @"Select a reason";
+    if (grade.firstReason) {
+        firstReason.text = reasonOne;
+    } else {
+        firstReason.text = @"Select a reason";
+    }
     firstReason.numberOfLines = 0;
     firstReason.textAlignment = NSTextAlignmentCenter;
     firstReason.backgroundColor = [UIColor clearColor];
@@ -260,7 +340,11 @@
     secondReason = [[UILabel alloc] initWithFrame:CGRectMake(30, 75, 220, 100)];
     secondReason.userInteractionEnabled = YES;
     [secondReason addGestureRecognizer:tap2];
+    if (grade.secondReason) {
+        secondReason.text = reasonTwo;
+    } else {
     secondReason.text = @"Select a reason";
+    }
     secondReason.numberOfLines = 0;
     secondReason.textAlignment = NSTextAlignmentCenter;
     secondReason.backgroundColor = [UIColor clearColor];
@@ -301,7 +385,11 @@
     thirdReason = [[UILabel alloc] initWithFrame:CGRectMake(30, 75, 220, 100)];
     thirdReason.userInteractionEnabled = YES;
     [thirdReason addGestureRecognizer:tap3];
+    if (grade.thirdReason) {
+        thirdReason.text = reasonThree;
+    } else {
     thirdReason.text = @"Select a reason";
+    }
     thirdReason.numberOfLines = 0;
     thirdReason.textAlignment = NSTextAlignmentCenter;
     thirdReason.backgroundColor = [UIColor clearColor];
@@ -343,7 +431,11 @@
     fourthReason = [[UILabel alloc] initWithFrame:CGRectMake(30, 75, 220, 100)];
     fourthReason.userInteractionEnabled = YES;
     [fourthReason addGestureRecognizer:tap4];
+    if (grade.fourthReason) {
+        fourthReason.text = reasonFour;
+    } else {
     fourthReason.text = @"Select a reason";
+    }
     fourthReason.numberOfLines = 0;
     fourthReason.textAlignment = NSTextAlignmentCenter;
     fourthReason.backgroundColor = [UIColor clearColor];
@@ -387,7 +479,11 @@
     fifthReason = [[UILabel alloc] initWithFrame:CGRectMake(30, 75, 220, 100)];
     fifthReason.userInteractionEnabled = YES;
     [fifthReason addGestureRecognizer:tap5];
-    fifthReason.text = @"Select a reason";
+    if (grade.fifthReason) {
+        fifthReason.text = reasonFive;
+    } else {
+     fifthReason.text = @"Select a reason";   
+    }
     fifthReason.numberOfLines = 0;
     fifthReason.textAlignment = NSTextAlignmentCenter;
     fifthReason.backgroundColor = [UIColor clearColor];
@@ -428,7 +524,11 @@
     sixthReason = [[UILabel alloc] initWithFrame:CGRectMake(30, 75, 220, 100)];
     sixthReason.userInteractionEnabled = YES;
     [sixthReason addGestureRecognizer:tap6];
-    sixthReason.text = @"Select a reason";
+    if (grade.sixthReason) {
+        sixthReason.text = reasonSix;
+    } else {
+         sixthReason.text = @"Select a reason";   
+    }
     sixthReason.numberOfLines = 0;
     sixthReason.textAlignment = NSTextAlignmentCenter;
     sixthReason.backgroundColor = [UIColor clearColor];
@@ -469,7 +569,11 @@
     seventhReason = [[UILabel alloc] initWithFrame:CGRectMake(30, 75, 220, 100)];
     seventhReason.userInteractionEnabled = YES;
     [seventhReason addGestureRecognizer:tap7];
-    seventhReason.text = @"Select a reason";
+    if (grade.seventhReason) {
+        seventhReason.text = reasonSeven;
+    } else {
+         seventhReason.text = @"Select a reason";   
+    }
     seventhReason.numberOfLines = 0;
     seventhReason.textAlignment = NSTextAlignmentCenter;
     seventhReason.backgroundColor = [UIColor clearColor];
@@ -510,7 +614,11 @@
     eighthReason = [[UILabel alloc] initWithFrame:CGRectMake(30, 75, 220, 100)];
     eighthReason.userInteractionEnabled = YES;
     [eighthReason addGestureRecognizer:tap8];
-    eighthReason.text = @"Select a reason";
+    if (grade.eighthReason) {
+        eighthReason.text = reasonEighth;
+    } else {
+         eighthReason.text = @"Select a reason";   
+    }
     eighthReason.numberOfLines = 0;
     eighthReason.textAlignment = NSTextAlignmentCenter;
     eighthReason.backgroundColor = [UIColor clearColor];
@@ -553,7 +661,11 @@
     ninthReason = [[UILabel alloc] initWithFrame:CGRectMake(30, 75, 220, 100)];
     ninthReason.userInteractionEnabled = YES;
     [ninthReason addGestureRecognizer:tap9];
-    ninthReason.text = @"Select a reason";
+    if (grade.ninthReason) {
+        ninthReason.text = reasonNine;
+    } else {
+            ninthReason.text = @"Select a reason";
+    }
     ninthReason.numberOfLines = 0;
     ninthReason.textAlignment = NSTextAlignmentCenter;
     ninthReason.backgroundColor = [UIColor clearColor];
@@ -596,7 +708,11 @@
     tenthReason = [[UILabel alloc] initWithFrame:CGRectMake(30, 75, 220, 100)];
     tenthReason.userInteractionEnabled = YES;
     [tenthReason addGestureRecognizer:tap10];
-    tenthReason.text = @"Select a reason";
+    if (grade.tenthReason) {
+        tenthReason.text = reasonTen;
+    } else {
+         tenthReason.text = @"Select a reason";   
+    }
     tenthReason.numberOfLines = 0;
     tenthReason.textAlignment = NSTextAlignmentCenter;
     tenthReason.backgroundColor = [UIColor clearColor];
@@ -637,7 +753,11 @@
     eleventhReason = [[UILabel alloc] initWithFrame:CGRectMake(30, 75, 220, 100)];
     eleventhReason.userInteractionEnabled = YES;
     [eleventhReason addGestureRecognizer:tap11];
-    eleventhReason.text = @"Select a reason";
+    if (grade.eleventhReason) {
+        eleventhReason.text = reasonEleven;
+    } else {
+         eleventhReason.text = @"Select a reason";   
+    }
     eleventhReason.numberOfLines = 0;
     eleventhReason.textAlignment = NSTextAlignmentCenter;
     eleventhReason.backgroundColor = [UIColor clearColor];
@@ -680,7 +800,11 @@
     twelfthReason = [[UILabel alloc] initWithFrame:CGRectMake(30, 75, 220, 100)];
     twelfthReason.userInteractionEnabled = YES;
     [twelfthReason addGestureRecognizer:tap12];
-    twelfthReason.text = @"Select a reason";
+    if (grade.twelfthReason) {
+        twelfthReason.text = reasonTwelve;
+    } else {
+         twelfthReason.text = @"Select a reason";   
+    }
     twelfthReason.numberOfLines = 0;
     twelfthReason.textAlignment = NSTextAlignmentCenter;
     twelfthReason.backgroundColor = [UIColor clearColor];
@@ -749,60 +873,48 @@
     
     NSLog(@"SLIDER MOVED: %f", slider.value);
     
-    NSString *grade = [NSString stringWithFormat:@"%ld", lroundf(slider.value)];
+    NSString *gradeString = [NSString stringWithFormat:@"%ld", lroundf(slider.value)];
     
     if (slider == firstSlider) {
         firstGrade = [NSNumber numberWithInt:slider.value];
-        firstGradeLabel.text = grade;
+        firstGradeLabel.text = gradeString;
     } else if (slider == secondSlider) {
         secondGrade = [NSNumber numberWithInt:slider.value];
-        secondGradeLabel.text = grade;
+        secondGradeLabel.text = gradeString;
     } else if (slider == thirdSlider) {
         thirdGrade = [NSNumber numberWithInt:slider.value];
-        thirdGradeLabel.text = grade;
+        thirdGradeLabel.text = gradeString;
     } else if (slider == fourthSlider) {
         fourthGrade = [NSNumber numberWithInt:slider.value];
-        fourthGradeLabel.text = grade;
+        fourthGradeLabel.text = gradeString;
     } else if (slider == fifthSlider) {
         fifthGrade = [NSNumber numberWithInt:slider.value];
-        fifthGradeLabel.text = grade;
+        fifthGradeLabel.text = gradeString;
     } else if (slider == sixthSlider) {
         sixthGrade = [NSNumber numberWithInt:slider.value];
-        sixthGradeLabel.text = grade;
+        sixthGradeLabel.text = gradeString;
     } else if (slider == seventhSlider) {
         seventhGrade = [NSNumber numberWithInt:slider.value];
-        seventhGradeLabel.text = grade;
+        seventhGradeLabel.text = gradeString;
     } else if (slider == eighthSlider) {
         eighthGrade = [NSNumber numberWithInt:slider.value];
-        eighthGradeLabel.text = grade;
+        eighthGradeLabel.text = gradeString;
     } else if (slider == ninthSlider) {
         ninthGrade = [NSNumber numberWithInt:slider.value];
-        ninthGradeLabel.text = grade;
+        ninthGradeLabel.text = gradeString;
     } else if (slider == tenthSlider) {
         tenthGrade = [NSNumber numberWithInt:slider.value];
-        tenthGradeLabel.text = grade;
+        tenthGradeLabel.text = gradeString;
     } else if (slider == eleventhSlider){
         eleventhGrade = [NSNumber numberWithInt:slider.value];
-        eleventhGradeLabel.text = grade;
+        eleventhGradeLabel.text = gradeString;
     } else if (slider == twelfthSlider) {
         twelfthGrade = [NSNumber numberWithInt:slider.value];
-        twelfthGradeLabel.text = grade;
+        twelfthGradeLabel.text = gradeString;
     }
 }
 
-- (IBAction)buttonPressed:(id)sender {
-    
-    NSLog(@"BUTTON PRESSED");
-    SWRevealViewController *revealController = self.revealViewController; 
-    FinalGradeViewController *finalGradeView = [[FinalGradeViewController alloc] init];
-    [revealController setFrontViewController:finalGradeView];
-    finalGradeView.view.layer.opacity = 0.1f;
-    [UIView animateWithDuration:0.3 animations:^{
-        finalGradeView.view.layer.opacity = 1.0f;
-    }];
 
-
-}
 
 - (void)selectedView:(id)sender {
     
@@ -894,6 +1006,111 @@
         twelfthReason.text = reason;
         reasonTwelve = reason;
     }
+    
+    
+}
+
+
+// DONE BUTTON PRESSED
+
+- (IBAction)buttonPressed:(id)sender {
+    
+    NSLog(@"BUTTON PRESSED");
+    
+    if (grade) {
+        
+        [self.managedObjectContext deleteObject:grade];
+
+    }
+    
+    
+    grade = [NSEntityDescription insertNewObjectForEntityForName:@"Grade" inManagedObjectContext:self.managedObjectContext];
+    
+    grade.firstGrade = firstGrade;
+    grade.secondGrade = secondGrade;
+    grade.thirdGrade = thirdGrade;
+    grade.fourthGrade = fourthGrade;
+    grade.fifthGrade = fifthGrade;
+    grade.sixthGrade = sixthGrade;
+    grade.seventhGrade = seventhGrade;
+    grade.eighthGrade = eighthGrade;
+    grade.ninthGrade = ninthGrade;
+    grade.tenthGrade = tenthGrade;
+    grade.eleventhGrade = eleventhGrade;
+    grade.twelfthGrade = twelfthGrade;
+    
+    grade.firstReason = reasonOne;
+    grade.secondReason = reasonTwo;
+    grade.thirdReason = reasonThree;
+    grade.fourthReason = reasonFour;
+    grade.fifthReason = reasonFive;
+    grade.sixthReason = reasonSix;
+    grade.seventhReason = reasonSeven;
+    grade.eighthReason = reasonEighth;
+    grade.ninthReason = reasonNine;
+    grade.tenthReason = reasonTen;
+    grade.eleventhReason = reasonEleven;
+    grade.twelfthReason = reasonTwelve;
+    
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"GRADE SAVE ERROR %@", error);
+        abort();
+    }
+    
+    int result = 0;
+    for (int i = 0; i < [scoreArray count]; i++) {
+        
+        result += [[scoreArray objectAtIndex:i] intValue];
+    }
+    NSLog(@"%d / 60", result);
+    
+    UIView *hudView = [[UIView alloc] initWithFrame:CGRectMake(60, 100, 200, 200)];
+    hudView.backgroundColor = [UIColor blackColor];
+    //hudView.layer.borderColor = grayColor.CGColor;
+    hudView.layer.borderWidth = 5.0f;
+    hudView.layer.cornerRadius = 5.0f;
+    hudView.alpha = 0;
+    
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    spinner.frame = CGRectMake(75, 50, 40, 40);
+    [hudView addSubview:spinner];
+    [spinner startAnimating];
+    [self.view addSubview:hudView];
+    
+    
+    UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, 200, 75)];
+    text.textAlignment = NSTextAlignmentCenter;
+    text.numberOfLines = 0;
+    text.lineBreakMode = NSLineBreakByWordWrapping;
+    text.font = [UIFont fontWithName:@"Times New Roman" size:24.0f];
+    text.text = @"Analyzing your answers";
+    text.textColor = [UIColor whiteColor];
+    text.backgroundColor = [UIColor clearColor];
+    [hudView addSubview:text];
+    
+    
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        hudView.alpha = 0.75;
+    }];
+
+    [self performSelector:@selector(loadFinalGradeView) withObject:nil afterDelay:1.0];
+    
+}
+
+- (void)loadFinalGradeView {
+    
+    
+     
+     SWRevealViewController *revealController = self.revealViewController;
+     FinalGradeViewController *finalGradeView = [[FinalGradeViewController alloc] init];
+     [revealController setFrontViewController:finalGradeView];
+     finalGradeView.view.layer.opacity = 0.1f;
+     [UIView animateWithDuration:0.3 animations:^{
+     finalGradeView.view.layer.opacity = 1.0f;
+     }];
+     
     
     
 }

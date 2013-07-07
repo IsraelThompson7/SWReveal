@@ -10,4 +10,6 @@
 
 @interface RearTableViewController : UIViewController
 
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+
 @end

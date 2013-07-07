@@ -40,6 +40,8 @@
     SWRevealViewController *revealController = self.revealViewController;
     [self.view addGestureRecognizer:revealController.panGestureRecognizer];
     
+
+    
     self.scrollView.contentSize = CGSizeMake(1600, 420);
     self.pageControl.numberOfPages = 5;
     
@@ -116,6 +118,9 @@
     
     SWRevealViewController *revealController = self.revealViewController;  
     MyGradeViewController *MyGradeView = [[MyGradeViewController alloc] init];
+    MyGradeView.managedObjectContext = self.managedObjectContext;
+    MyGradeView.testString = @"THIS TEST HAS WORKED";
+    
     
     /*
      UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:MyGradeView];

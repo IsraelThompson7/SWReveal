@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="DataModel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Grade" representedClassName="Grade" syncable="YES">
+        <attribute name="eighthGrade" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="eighthReason" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eleventhGrade" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="eleventhReason" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fifthGrade" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="fifthReason" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstGrade" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="firstReason" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fourthGrade" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="fourthReason" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ninthGrade" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="ninthReason" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="secondGrade" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="secondReason" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="seventhGrade" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="seventhReason" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sixthGrade" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="sixthReason" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tenthGrade" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="tenthReason" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thirdGrade" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="thirdReason" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="twelfthGrade" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="twelfthReason" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Grade" positionX="160" positionY="192" width="128" height="405"/>
+    </elements>
 </model>

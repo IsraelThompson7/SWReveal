@@ -12,4 +12,7 @@
 
 @interface MyGradeViewController : UIViewController <ReasonViewControllerDelegate>
 
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) NSString *testString;
+
 @end

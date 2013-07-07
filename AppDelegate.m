@@ -10,12 +10,17 @@
 #import "OpeningViewController.h"
 #import "RearTableViewController.h"
 #import "SWRevealViewController.h"
+#import "OpeningViewController.h"
 
 
 @interface AppDelegate()<SWRevealViewControllerDelegate>
+
+
 @end
 
 @implementation AppDelegate
+
+@synthesize managedObjectContext, managedObjectModel, persistentStoreCoordinator;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -33,7 +38,9 @@
 	self.window = window;
     
 	RearTableViewController *rearViewController = [[RearTableViewController alloc] init];
+    rearViewController.managedObjectContext = self.managedObjectContext;
     OpeningViewController *frontViewController = [[OpeningViewController alloc] init];
+    frontViewController.managedObjectContext = self.managedObjectContext;
     
     
    // UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:frontViewController];
@@ -51,6 +58,11 @@
     
 	self.window.rootViewController = mainRevealController;
 	[self.window makeKeyAndVisible];
+    
+    
+    
+    
+  
 	return YES;
     
     
@@ -107,6 +119,58 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - Core Data
+
+- (NSManagedObjectModel *)managedObjectModel
+{
+    if (managedObjectModel == nil) {
+        NSString *modelPath = [[NSBundle mainBundle] pathForResource:@"DataModel" ofType:@"momd"];
+        NSURL *modelURL = [NSURL fileURLWithPath:modelPath];
+        managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    }
+    return managedObjectModel;
+}
+
+- (NSString *)documentsDirectory
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    return documentsDirectory;
+}
+
+- (NSString *)dataStorePath
+{
+    return [[self documentsDirectory] stringByAppendingPathComponent:@"DataStore.sqlite"];
+}
+
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
+{
+    if (persistentStoreCoordinator == nil) {
+        NSURL *storeURL = [NSURL fileURLWithPath:[self dataStorePath]];
+        
+        persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
+        
+        NSError *error;
+        if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+            NSLog(@"Error adding persistent store %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+    return persistentStoreCoordinator;
+}
+
+- (NSManagedObjectContext *)managedObjectContext
+{
+    if (managedObjectContext == nil) {
+        NSPersistentStoreCoordinator *coordinator = self.persistentStoreCoordinator;
+        if (coordinator != nil) {
+            managedObjectContext = [[NSManagedObjectContext alloc] init];
+            [managedObjectContext setPersistentStoreCoordinator:coordinator];
+        }
+    }
+    return managedObjectContext;
 }
 
 @end
