@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
-@interface FinalGradeViewController : UIViewController
+@interface FinalGradeViewController : UIViewController<UIAlertViewDelegate, MFMailComposeViewControllerDelegate>
+
+@property (nonatomic, strong) NSNumber *finalGrade;
 
 @end

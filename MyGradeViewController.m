@@ -25,6 +25,7 @@
 
 @implementation MyGradeViewController {
     
+
     Grade *grade;
     NSArray *scoreArray;
     
@@ -305,14 +306,21 @@
     [firstView addSubview:firstReason];
     
     firstSlider = [[UISlider alloc] initWithFrame:CGRectMake(50, 250, 200, 50)];
-    firstSlider.value = 0;
+    firstSlider.value = 5;
+    /*
+    if (grade.firstGrade) {
+        firstSlider.value = [firstGrade floatValue];
+    } else {
+         firstSlider.value = 0;   
+    }
+     */
     firstSlider.minimumValue = 0;
     firstSlider.maximumValue = 5;
     [firstSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
     [firstView addSubview:firstSlider];
     
     firstGradeLabel = [[UILabel alloc] initWithFrame:CGRectMake(150, 200, 50, 50)];
-    firstGradeLabel.text = @"A";
+    firstGradeLabel.text = [NSString stringWithFormat:@"%@", firstGrade];
     [firstView addSubview:firstGradeLabel];
     
     
@@ -354,7 +362,11 @@
     [secondView addSubview:secondReason];
     
     secondSlider = [[UISlider alloc] initWithFrame:CGRectMake(50, 250, 200, 50)];
+    if (grade.secondGrade) {
+        secondSlider.value = [secondGrade floatValue];
+    } else {
     secondSlider.value = 0;
+    }
     secondSlider.minimumValue = 0;
     secondSlider.maximumValue = 5;
     [secondSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
@@ -400,7 +412,11 @@
     
     
     thirdSlider = [[UISlider alloc] initWithFrame:CGRectMake(50, 250, 200, 50)];
-    thirdSlider.value = 0;
+    if (grade.thirdGrade) {
+        thirdSlider.value = [thirdGrade floatValue];
+    } else {
+         thirdSlider.value = 0;   
+    }
     thirdSlider.minimumValue = 0;
     thirdSlider.maximumValue = 5;
     [thirdSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
@@ -445,7 +461,11 @@
     [fourthView addSubview:fourthReason];
     
     fourthSlider = [[UISlider alloc] initWithFrame:CGRectMake(50, 250, 200, 50)];
-    fourthSlider.value = 0;
+    if (grade.fourthGrade) {
+        fourthSlider.value = [fourthGrade floatValue];
+    } else {
+         fourthSlider.value = 0;   
+    }
     fourthSlider.minimumValue = 0;
     fourthSlider.maximumValue = 5;
     [fourthSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
@@ -493,7 +513,11 @@
     [fifthView addSubview:fifthReason];
     
     fifthSlider = [[UISlider alloc] initWithFrame:CGRectMake(50, 250, 200, 50)];
-    fifthSlider.value = 0;
+    if (grade.fifthGrade) {
+        fifthSlider.value = [fifthGrade floatValue];
+    } else {
+         fifthSlider.value = 0;   
+    }
     fifthSlider.minimumValue = 0;
     fifthSlider.maximumValue = 5;
     [fifthSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
@@ -538,7 +562,11 @@
     [sixthView addSubview:sixthReason];
     
     sixthSlider = [[UISlider alloc] initWithFrame:CGRectMake(50, 250, 200, 50)];
+    if (grade.sixthGrade) {
+        sixthSlider.value = [sixthGrade floatValue];
+    } else {
     sixthSlider.value = 0;
+    }
     sixthSlider.minimumValue = 0;
     sixthSlider.maximumValue = 5;
     [sixthSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
@@ -583,7 +611,11 @@
     [seventhView addSubview:seventhReason];
     
     seventhSlider = [[UISlider alloc] initWithFrame:CGRectMake(50, 250, 200, 50)];
-    seventhSlider.value = 0;
+    if (grade.seventhGrade) {
+        seventhSlider.value = [seventhGrade floatValue];
+    } else {
+         seventhSlider.value = 0;   
+    }
     seventhSlider.minimumValue = 0;
     seventhSlider.maximumValue = 5;
     [seventhSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
@@ -628,7 +660,11 @@
     [eighthView addSubview:eighthReason];
     
     eighthSlider = [[UISlider alloc] initWithFrame:CGRectMake(50, 250, 200, 50)];
-    eighthSlider.value = 0;
+    if (grade.eighthGrade) {
+        eighthSlider.value = [eighthGrade floatValue];
+    } else {
+         eighthSlider.value = 0;   
+    }
     eighthSlider.minimumValue = 0;
     eighthSlider.maximumValue = 5;
     [eighthSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
@@ -675,7 +711,11 @@
     [ninthView addSubview:ninthReason];
     
     ninthSlider = [[UISlider alloc] initWithFrame:CGRectMake(50, 250, 200, 50)];
-    ninthSlider.value = 0;
+    if (grade.ninthGrade) {
+        ninthSlider.value = [ninthGrade floatValue];
+    } else {
+         ninthSlider.value = 0;   
+    }
     ninthSlider.minimumValue = 0;
     ninthSlider.maximumValue = 5;
     [ninthSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
@@ -722,7 +762,11 @@
     [tenthView addSubview:tenthReason];
     
     tenthSlider = [[UISlider alloc] initWithFrame:CGRectMake(50, 250, 200, 50)];
+    if (grade.tenthGrade) {
+        tenthSlider.value = [tenthGrade floatValue];
+    } else {
     tenthSlider.value = 0;
+    }
     tenthSlider.minimumValue = 0;
     tenthSlider.maximumValue = 5;
     [tenthSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
@@ -767,7 +811,11 @@
     [eleventhView addSubview:eleventhReason];
     
     eleventhSlider = [[UISlider alloc] initWithFrame:CGRectMake(50, 250, 200, 50)];
-    eleventhSlider.value = 0;
+    if (grade.eleventhGrade) {
+        eleventhSlider.value = [eleventhGrade floatValue];
+    } else {
+         eleventhSlider.value = 0;   
+    }
     eleventhSlider.minimumValue = 0;
     eleventhSlider.maximumValue = 5;
     [eleventhSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
@@ -814,7 +862,11 @@
     [twelfthView addSubview:twelfthReason];
     
     twelfthSlider = [[UISlider alloc] initWithFrame:CGRectMake(50, 250, 200, 50)];
-    twelfthSlider.value = 0;
+    if (grade.twelfthGrade) {
+        twelfthSlider.value = [twelfthGrade floatValue];
+    } else {
+         twelfthSlider.value = 0;   
+    }
     twelfthSlider.minimumValue = 0;
     twelfthSlider.maximumValue = 5;
     [twelfthSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
@@ -950,9 +1002,7 @@
         controller.reasonsArray = reasonsArray12;
     }
     
-    [self.view addSubview:controller.view];
-    [self addChildViewController:controller];
-    [controller didMoveToParentViewController:self];
+    [controller presentInParentViewController:self];
     
     
 }
@@ -1052,6 +1102,9 @@
     grade.eleventhReason = reasonEleven;
     grade.twelfthReason = reasonTwelve;
     
+    scoreArray = [NSArray arrayWithObjects:firstGrade, secondGrade, thirdGrade, fourthGrade, fifthGrade, seventhGrade,
+                  eighthGrade, ninthGrade, tenthGrade, eleventhGrade, twelfthGrade, nil];
+    
     NSError *error;
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"GRADE SAVE ERROR %@", error);
@@ -1063,6 +1116,7 @@
         
         result += [[scoreArray objectAtIndex:i] intValue];
     }
+    self.finalGrade = [NSNumber numberWithInt:result];
     NSLog(@"%d / 60", result);
     
     UIView *hudView = [[UIView alloc] initWithFrame:CGRectMake(60, 100, 200, 200)];
@@ -1105,6 +1159,7 @@
      
      SWRevealViewController *revealController = self.revealViewController;
      FinalGradeViewController *finalGradeView = [[FinalGradeViewController alloc] init];
+    finalGradeView.finalGrade = self.finalGrade;
      [revealController setFrontViewController:finalGradeView];
      finalGradeView.view.layer.opacity = 0.1f;
      [UIView animateWithDuration:0.3 animations:^{

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PrioritiesViewController : UIViewController
+@interface PrioritiesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 @end

@@ -9,6 +9,7 @@
 #import "ReasonViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "CustomCellBackground.h"
+#import "GradientView.h"
 
 @interface ReasonViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -16,7 +17,10 @@
 
 @end
 
-@implementation ReasonViewController
+@implementation ReasonViewController {
+    
+    GradientView *gradientView;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -97,21 +101,63 @@
 
 - (void)closeScreen {
     
+    [self dismissFromParentViewController];
+
+}
+
+- (void)dismissFromParentViewController {
     
     self.view.alpha = 1.0;
+    gradientView.alpha = 1.0;
     [UIView animateWithDuration:0.3 animations:^{
         [self willMoveToParentViewController:nil];
         self.view.alpha = 0.0;
+        gradientView.alpha = 0.0;
         
     } completion:^(BOOL finished) {
         
         [self.view removeFromSuperview];
+        [gradientView removeFromSuperview];
         [self removeFromParentViewController];
         
     }];
+}
+
+- (void)presentInParentViewController:(UIViewController *)parentViewController {
+    
+    gradientView = [[GradientView alloc] initWithFrame:parentViewController.view.bounds];
+    [parentViewController.view addSubview:gradientView];
+    gradientView.alpha = 0.0;
+    
+    [UIView animateWithDuration:0.1 animations:^{
+        gradientView.alpha = 1.0;
+        
+    }];
+    
+
+    
+    [parentViewController.view addSubview:self.view];
+    [parentViewController addChildViewController:self];
+    [self didMoveToParentViewController:parentViewController];
+    
+    
+    
     
     
 }
+
+
+- (void)dealloc {
+    
+    
+}
+
+
+
+
+
+
+
 
 
 

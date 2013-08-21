@@ -20,4 +20,7 @@
 @property (nonatomic, assign) id <ReasonViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSArray *reasonsArray;
 
+-(void)presentInParentViewController:(UIViewController *)parentViewController;
+- (void)dismissFromParentViewController;
+
 @end

@@ -10,6 +10,7 @@
 #import "SWRevealViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MyGradeViewController.h"
+#import "CoolButton.h"
 
 
 
@@ -49,11 +50,17 @@
     welcomeLabel.textColor = [UIColor darkGrayColor];
     welcomeLabel.font = [UIFont fontWithName:@"Times New Roman" size:17.0f];
     welcomeLabel.text = @"Welcome to";
+    [welcomeLabel sizeToFit];
+    welcomeLabel.frame = CGRectMake((self.view.frame.size.width - welcomeLabel.frame.size.width)/2, 100, welcomeLabel.frame.size.width, 50);
     
-    UILabel *lifeGradeLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 150, 250, 50)];
+    NSLog(@"Frame: %f", self.view.frame.size.width);
+    
+    UILabel *lifeGradeLabel = [[UILabel alloc] initWithFrame:CGRectMake(65, 150, 250, 50)];
     lifeGradeLabel.textColor = [UIColor darkGrayColor];
     lifeGradeLabel.font = [UIFont fontWithName:@"Times New Roman" size:36.0f];
     lifeGradeLabel.text = @"Life Grade";
+    [lifeGradeLabel sizeToFit];
+    lifeGradeLabel.frame = CGRectMake((self.view.frame.size.width - lifeGradeLabel.frame.size.width)/2, 150, lifeGradeLabel.frame.size.width, 50);
     
     UILabel *stepOneLabel = [[UILabel alloc] initWithFrame:CGRectMake(340, 50, 100, 50)];
     stepOneLabel.textColor = [UIColor darkGrayColor];
@@ -70,10 +77,13 @@
     stepThreeLabel.font = [UIFont fontWithName:@"Times New Roman" size:17.0f];
     stepThreeLabel.text = @"Step Three";
     
-    UIButton *startButton = [[UIButton alloc] initWithFrame:CGRectMake(1450, 100, 100, 50)];
+    CoolButton *startButton = [CoolButton buttonWithType:UIButtonTypeCustom];
+    startButton.frame = CGRectMake(1335, 360, 200, 50);
     [startButton addTarget:self action:@selector(startButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    startButton.backgroundColor = [UIColor greenColor];
-    [startButton setTitle:@"Start Grading" forState:UIControlStateNormal];
+    startButton.backgroundColor = [UIColor clearColor];
+    [startButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [startButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateSelected];
+    [startButton setTitle:@"Start Grading..." forState:UIControlStateNormal];
     
     
     
@@ -115,6 +125,8 @@
 
 
 - (void)startButtonPressed {
+    
+   
     
     SWRevealViewController *revealController = self.revealViewController;  
     MyGradeViewController *MyGradeView = [[MyGradeViewController alloc] init];
